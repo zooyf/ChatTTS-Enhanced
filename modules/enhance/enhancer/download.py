@@ -3,7 +3,8 @@ import os
 import subprocess
 from pathlib import Path
 
-REPO_URL = "https://huggingface.co/ResembleAI/resemble-enhance"
+HF_ENDPOINT = os.environ.get("HF_ENDPOINT", "https://huggingface.co")
+REPO_URL = f"{HF_ENDPOINT}/ResembleAI/resemble-enhance"
 REPO_DIR = Path(__file__).parent.parent / "model_repo"
 
 logger = logging.getLogger(__name__)
