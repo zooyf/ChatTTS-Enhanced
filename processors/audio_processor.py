@@ -5,13 +5,17 @@ import os
 import torch
 import torchaudio
 import numpy as np
+from TTS.api import TTS
 from utils.path_utils import get_path
 from utils.srt_utils import generate_srt_from_audio_segments
+
+# TTS conversion freevc
+tts = TTS(model_name="voice_conversion_models/multilingual/vctk/freevc24", progress_bar=False).to("cuda")
 #音频列表
 audio_files = []
 enhanced_audio_files = []
 
-def audio_pre_processor(params: AudioPreProcessParams,enparams: EnhanceProcessParams,CHAT):
+def audio_pre_processor(params: AudioPreProcessParams,enparams: EnhanceProcessParams,CHAT,target_wav=None):
 
     text_segments = params.text_segments
     audio_profile_path = params.audio_profile_path
@@ -71,6 +75,8 @@ def audio_pre_processor(params: AudioPreProcessParams,enparams: EnhanceProcessPa
                 segment = str(segment)
             segment_audio_path,sample_rate,audio_data = audio_processor(CHAT, file_name,segment,refine_text_flag,nums2text_switch,params_refine_text,params_infer_code,i)
             audio_files.append(segment_audio_path)
+            if target_wav and os.path.exists(target_wav):
+                tts.voice_conversion_to_file(source_wav=segment_audio_path, target_wav=target_wav, file_path=segment_audio_path)
 
             if enhance_audio or denoise_audio:
                 enparams.segment_audio_path=segment_audio_path

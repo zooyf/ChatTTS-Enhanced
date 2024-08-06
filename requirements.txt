@@ -21,3 +21,4 @@ jieba==0.42.1
 srt==3.5.3
 pypinyin==0.51.0
 cn2an
+TTS==0.22.0  # TTS freevc conversion

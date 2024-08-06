@@ -92,6 +92,6 @@ def generate_audio():
         solver=get_component('solver_dropdown').value,
         tau=get_component('tau_slider').value,
     )
-    original_audio_output,enhanced_audio_output, text = audio_pre_processor(audio_pre_Process_Params,enhance_parms,CHAT)
+    original_audio_output,enhanced_audio_output, text = audio_pre_processor(audio_pre_Process_Params,enhance_parms,CHAT,'/home/ai/TTS/gavin.MP3')
     # text=''
     return original_audio_output,enhanced_audio_output, text
